@@ -1,6 +1,6 @@
-BITCOIND=bitcoind
-BITCOINGUI=bitcoin-qt
-BITCOINCLI=bitcoin-cli
+BITCORED=bitcored
+BITCOREGUI=bitcore-qt
+BITCORECLI=bitcore-cli
 B1_FLAGS=
 B2_FLAGS=
 B1=-datadir=1 $(B1_FLAGS)
@@ -11,35 +11,46 @@ AMOUNT=
 ACCOUNT=
 
 start:
-	$(BITCOIND) $(B1) -daemon
-	$(BITCOIND) $(B2) -daemon
+	$(BITCORED) $(B1) -daemon
+	$(BITCORED) $(B2) -daemon
 
 start-gui:
-	$(BITCOINGUI) $(B1) &
-	$(BITCOINGUI) $(B2) &
+	$(BITCOREGUI) $(B1) &
+	$(BITCOREGUI) $(B2) &
 
-generate:
-	$(BITCOINCLI) $(B1) generate $(BLOCKS)
+generate1:
+	$(BITCORECLI) $(B1) generate $(BLOCKS)
 
-getinfo:
-	$(BITCOINCLI) $(B1) -getinfo
-	$(BITCOINCLI) $(B2) -getinfo
+generate2:
+	$(BITCORECLI) $(B2) generate $(BLOCKS)
+
+getnetworkinfo:
+	$(BITCORECLI) $(B1) getnetworkinfo
+	$(BITCORECLI) $(B2) getnetworkinfo
+
+getblockchaininfo:
+	$(BITCORECLI) $(B1) getblockchaininfo
+	$(BITCORECLI) $(B2) getblockchaininfo
+
+getwalletinfo:
+	$(BITCORECLI) $(B1) getwalletinfo
+	$(BITCORECLI) $(B2) getwalletinfo
 
 sendfrom1:
-	$(BITCOINCLI) $(B1) sendtoaddress $(ADDRESS) $(AMOUNT)
+	$(BITCORECLI) $(B1) sendtoaddress $(ADDRESS) $(AMOUNT)
 
 sendfrom2:
-	$(BITCOINCLI) $(B2) sendtoaddress $(ADDRESS) $(AMOUNT)
+	$(BITCORECLI) $(B2) sendtoaddress $(ADDRESS) $(AMOUNT)
 
 address1:
-	$(BITCOINCLI) $(B1) getnewaddress $(ACCOUNT)
+	$(BITCORECLI) $(B1) getnewaddress $(ACCOUNT)
 
 address2:
-	$(BITCOINCLI) $(B2) getnewaddress $(ACCOUNT)
+	$(BITCORECLI) $(B2) getnewaddress $(ACCOUNT)
 
 stop:
-	$(BITCOINCLI) $(B1) stop
-	$(BITCOINCLI) $(B2) stop
+	$(BITCORECLI) $(B1) stop
+	$(BITCORECLI) $(B2) stop
 
 clean:
 	find 1/regtest/* -not -name 'server.*' -delete

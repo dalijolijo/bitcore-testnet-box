@@ -1,0 +1,29 @@
+Example
+------
+docker run --rm -d -v /root/python-OP_RETURN/:/root/app -p 19001:19001 -p 19011:19011 --name btx-testnet-box dalijolijo/bitcore-testnet-box
+
+docker exec -it btx-testnet-box bash
+
+make start
+
+make address1
+mqbS8vaPvhkhVpwbC6FikMSXVKsHpmREB4
+
+make address2
+mqGjg9rpMJ2EKf9mbJq8j98su3qQEAFPbS
+
+make getwalletinfo
+
+make generate1 BLOCKS=50
+make generate2 BLOCKS=50
+
+make getwalletinfo
+
+make generate1 BLOCKS=40
+make generate2 BLOCKS=5
+
+cd ./op_return/1/
+python send-OP_RETURN.py mwaib8jHc9wmQ1Y1LXr5Ntk78uhQbVeYQX 0.001 'Hello, user2!' 1
+
+cd ./op_return/2/
+python send-OP_RETURN.py mmnyUpetYrugwDgwQWuJ1hJd4CThnYNb55 0.001 'Hello, user1!' 1
