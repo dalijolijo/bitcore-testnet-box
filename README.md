@@ -120,7 +120,7 @@ bitcore-cli -datadir=2  getnetworkinfo
 $ make getblockchaininfo
 bitcore-cli -datadir=1  getblockchaininfo
 {
-  "chain": "regtest",
+  "chain": "testnet",
   "blocks": 0,
   "headers": 0,
   "bestblockhash": "604148281e5c4b7f2487e5d03cd60d8e6f69411d613f6448034508cea52e9574",
@@ -210,7 +210,7 @@ bitcore-cli -datadir=2  getwalletinfo
 
 Normally on the live, real, bitcore network, blocks are generated, on average,
 every 2.5 minutes. Since this testnet-in-box uses BitCore Core's (bitcored)
-regtest mode, we are able to generate a block on a private network
+testnet mode, we are able to generate a block on a private network
 instantly using a simple command.
 
 To generate a block:
@@ -297,11 +297,11 @@ attached to allow you to type in commands. The image also exposes
 the two JSON-RPC ports from the nodes if you want to be able to access them
 from outside the container.
       
-``$ docker run --rm -d -p 19001:19001 -p 19011:19011 --name btx-testnet-box dalijolijo/bitcore-testnet-box``
+``$ docker run --rm -d -p 20001:20001 -p 20011:20011 --name btx-testnet-box dalijolijo/bitcore-testnet-box``
 
 or if you built the docker image yourself:
 
-``$ docker run --rm -d -p 19001:19001 -p 19011:19011 --name btx-testnet-box bitcore-testnet-box``
+``$ docker run --rm -d -p 20001:20001 -p 20011:20011 --name btx-testnet-box bitcore-testnet-box``
 
 Jump into the docker container with:
 
