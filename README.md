@@ -10,6 +10,7 @@ path unless running this within a [Docker](https://www.docker.com) container
 ## GitHub Repository Clone
 ```
 git clone https://github.com/dalijolijo/bitcore-testnet-box.git
+git checkout testnet
 ```
 
 ## Starting the testnet-box
@@ -286,10 +287,10 @@ sudo curl -sSL https://get.docker.com | sh
 ### Building docker image
 
 Pull the image
-  * `docker pull dalijolijo/bitcore-testnet-box`
+  * `docker pull dalijolijo/bitcore-testnet-box:testnet`
 
 or build it yourself from this directory
-  * `docker build -t bitcore-testnet-box .`
+  * `docker build -t bitcore-testnet-box:testnet .`
 
 ### Running docker container
 The docker image will run two bitcore nodes in the background and is meant to be
@@ -297,12 +298,12 @@ attached to allow you to type in commands. The image also exposes
 the two JSON-RPC ports from the nodes if you want to be able to access them
 from outside the container.
       
-``$ docker run --rm -d -p 20001:20001 -p 20011:20011 --name btx-testnet-box dalijolijo/bitcore-testnet-box``
+``$ docker run --rm -d -p 20001:20001 -p 20011:20011 --name btx-testnet-box dalijolijo/bitcore-testnet-box:testnet``
 
 or if you built the docker image yourself:
 
-``$ docker run --rm -d -p 20001:20001 -p 20011:20011 --name btx-testnet-box bitcore-testnet-box``
+``$ docker run --rm -d -p 20001:20001 -p 20011:20011 --name btx-testnet-box bitcore-testnet-box:testnet``
 
 Jump into the docker container with:
 
-``$ docker exec -it bitcore-testnet-box bash``
+``$ docker exec -it btx-testnet-box bash``
