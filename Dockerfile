@@ -26,6 +26,7 @@ RUN apt-get install -y  apt-utils \
                         libssl-dev \
                         libtool \
                         pkg-config \
+			screen \
                         software-properties-common
 RUN sudo add-apt-repository ppa:bitcoin/bitcoin
 RUN sudo apt-get update && \
@@ -33,9 +34,9 @@ RUN sudo apt-get update && \
 RUN apt-get install -y libdb4.8-dev \
                        libdb4.8++-dev
 
-# Copy bitcored to bin/mynode
-RUN mkdir -p /home/tester/src/ && \
-    cd /home/tester/src/ && \
+# Copy bitcored to /root/src/
+RUN mkdir -p /root/src/ && \
+    cd /root/src/ && \
     wget https://github.com/LIMXTEC/BitCore/releases/download/0.15.2.0.0/linux.Ubuntu.16.04.LTS-static-libstdc.tar.gz && \
     tar xzf *.tar.gz && \
     chmod 775 bitcore* && \
@@ -43,28 +44,31 @@ RUN mkdir -p /home/tester/src/ && \
     rm *.tar.gz
 
 # create a non-root user
-RUN adduser --disabled-login --gecos "" tester
+#RUN adduser --disabled-login --gecos "" tester
 
 # run following commands from user's home directory
-WORKDIR /home/tester
+WORKDIR /root
 
 # copy the testnet-box files into the image
-ADD . /home/tester/bitcore-testnet-box
+ADD . /root/bitcore-testnet-box
 
 # make tester user own the bitcore-testnet-box
-RUN chown -R tester:tester /home/tester/bitcore-testnet-box
+#RUN chown -R root:root /root/bitcore-testnet-box
+
+# define directory for mounting dockerhost directory
+RUN mkdir /root/app
 
 # color PS1 and remove .git dirs
-RUN mv /home/tester/bitcore-testnet-box/.bashrc /home/tester/ && \
-    rm -rf /home/tester/bitcore-testnet-box/.gitignore && \
-    rm -rf /home/tester/bitcore-testnet-box/.git && \
-    cat /home/tester/.bashrc >> /etc/bash.bashrc
+RUN mv /root/bitcore-testnet-box/.bashrc /root/ && \
+    rm -rf /root/bitcore-testnet-box/.gitignore && \
+    rm -rf /root/bitcore-testnet-box/.git && \
+    cat /root/.bashrc >> /etc/bash.bashrc
 
-# use the tester user when running the image
-USER tester
+# use root when running the image
+USER root
 
 # run commands from inside the testnet-box directory
-WORKDIR /home/tester/bitcore-testnet-box
+WORKDIR /root/bitcore-testnet-box
 
 # expose two rpc ports for the nodes to allow outside container access
 # DEPRECATED: Use 'docker run -p 19001:19001 -p 19011:19011 ...'
